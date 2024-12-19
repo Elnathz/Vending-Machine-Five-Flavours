@@ -11,8 +11,10 @@ int x, banyakBeli;
 
 // kumpulan fungsi dan prosedur
     int tambahanSaldo();
+    int memilihMenuMakanan();
+    int memilihMenuMinuman();
     void transaksiSelesai(); // menampilkan ketika transaksi telah selesai
-
+    void menuFiveFlavours();
 struct makanan 
 {
     string nama[5] = {"Onigiri", "Sushi", "Ramen", "Hotdog", "Burger"};
@@ -80,7 +82,7 @@ int main()
     cin >> user.uang.uangAwal;
     user.poin.poinAwal = user.uang.uangAwal/1000;
     cout << "Jumlah saldo poin anda : " << user.poin.poinAwal << endl << endl;
-
+    menuFiveFlavours();
     while (user.poin.poinAwal >= 0)
     {
         while (user.poin.poinAwal > 2) // ketika poin lebih dari 2 maka akan memasuki looping ini
@@ -95,16 +97,7 @@ int main()
                 cout << endl;
                 if (menu == 1)
                 {
-                    cout << "Menu Makanan Five Flavours" << endl;
-                    cout << "1: Onigiri (10 poin)" << endl;
-                    cout << "2: Sushi (10 poin)" << endl;
-                    cout << "3: Ramen (12 poin)" << endl;
-                    cout << "4: Hotdog (15 poin)" << endl;
-                    cout << "5: Burger (15 poin)" << endl;
-                    cout << "0: Kembali ke menu utama" << endl;
-                    cout << "Pilih makanan yang mau anda tukarkan : ";
-                    cin >> pilihan;
-                    cout << endl;
+                    memilihMenuMakanan();
                     switch (pilihan)
                     {
                         case 1:
@@ -213,16 +206,7 @@ int main()
                 }
                 else if (menu == 2)
                 {
-                    cout << "Menu Minuman Five Flavours" << endl;
-                    cout << "1: Fanta (5 poin)" << endl;
-                    cout << "2: Coca-Cola (5 poin)" << endl;
-                    cout << "3: Sprite (5 poin)" << endl;
-                    cout << "4: Aqua (3 poin)" << endl;
-                    cout << "5: Teh Pucuk (4 poin)" << endl;
-                    cout << "0: Kembali ke pilihan menu" << endl;
-                    cout << "Pilih minuman yang mau anda tukarkan : ";
-                    cin >> pilihan;
-                    cout << endl;
+                    memilihMenuMinuman();
                     switch (pilihan)
                     {
                         case 1:
@@ -365,6 +349,46 @@ int main()
             break;
         }
     }
+}
+
+void menuFiveFlavours()
+    {
+        cout << "Menu Makanan dan Minuman Five Flavours" << endl;
+        cout << "Onigiri (10 poin) | Fanta     (5 poin)" << endl;
+        cout << "Sushi   (10 poin) | Coca-Cola (5 poin)" << endl;
+        cout << "Ramen   (12 poin) | Sprite    (5 poin)" << endl;
+        cout << "Hotdog  (15 poin) | Aqua      (3 poin)" << endl;
+        cout << "Burger  (15 poin) | Teh Pucuk (4 poin)" << endl;
+    }
+
+int memilihMenuMakanan()
+    {
+        cout << "Menu Makanan Five Flavours" << endl;
+        cout << "1: Onigiri (10 poin)" << endl;
+        cout << "2: Sushi   (10 poin)" << endl;
+        cout << "3: Ramen   (12 poin)" << endl;
+        cout << "4: Hotdog  (15 poin)" << endl;
+        cout << "5: Burger  (15 poin)" << endl;
+        cout << "0: Kembali ke menu utama" << endl;
+        cout << "Pilih makanan yang mau anda tukarkan : ";
+        cin >> pilihan;
+        cout << endl;
+        return pilihan;
+    }
+
+int memilihMenuMinuman()
+    {
+        cout << "Menu Minuman Five Flavours" << endl;
+        cout << "1: Fanta (5 poin)" << endl;
+        cout << "2: Coca-Cola (5 poin)" << endl;
+        cout << "3: Sprite (5 poin)" << endl;
+        cout << "4: Aqua (3 poin)" << endl;
+        cout << "5: Teh Pucuk (4 poin)" << endl;
+        cout << "0: Kembali ke pilihan menu" << endl;
+        cout << "Pilih minuman yang mau anda tukarkan : ";
+        cin >> pilihan;
+        cout << endl;
+        return pilihan;
 }
 
 int tambahanSaldo()
