@@ -1,6 +1,6 @@
 // judul : Program App Vending Machine Kelompok 6
 // 11-11-2024, Kost 
-// Ahmad Naufal zakirin, Farros Rifantiarno Ramadhani, Mohamad Ezza Fisabili
+// Ahmad Naufal Zakirin, Farros Rifantiarno Ramadhani, Mohamad Ezza Fisabili
 #include <iostream>
 using namespace std;
 
@@ -13,8 +13,10 @@ int x, banyakBeli;
     int tambahanSaldo();
     int memilihMenuMakanan();
     int memilihMenuMinuman();
+    
     void transaksiSelesai(); // menampilkan ketika transaksi telah selesai
     void menuFiveFlavours();
+
 struct makanan 
 {
     string nama[5] = {"Onigiri", "Sushi", "Ramen", "Hotdog", "Burger"};
@@ -104,7 +106,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 10 || user.poin.poinAwal >= 10)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[0];
                                 cout << "Makanan yang anda beli adalah Onigiri sebesar 10 poin" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMakanan.nama[0];
@@ -114,7 +116,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMakanan.poin[pilihan] << " poin untuk membeli Onigiri" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[0] << " poin untuk membeli Onigiri" << endl;
                                 break;
                             }
                             break;
@@ -123,7 +125,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 10 || user.poin.poinAwal >= 10)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[1];
                                 cout << "Makanan yang anda beli adalah Sushi sebesar 10 poin" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMakanan.nama[1];
@@ -133,7 +135,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan] << " poin untuk membeli Sushi" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[1] << " poin untuk membeli Sushi" << endl;
                                 break;
                             }
                             break;
@@ -142,7 +144,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 12 || user.poin.poinAwal >= 12)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[2];
                                 cout << "Makanan yang anda beli adalah Ramen sebesar 12 poin" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMakanan.nama[2];
@@ -152,7 +154,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan] << " poin untuk membeli Ramen" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[2] << " poin untuk membeli Ramen" << endl;
                                 break;
                             }
                             break;
@@ -161,7 +163,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 15 || user.poin.poinAwal >= 15)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[3];
                                 cout << "Makanan yang anda beli adalah Hotdog sebesar 15 poin" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMakanan.nama[3];
@@ -171,7 +173,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan] << " poin untuk membeli Hotdog" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[3] << " poin untuk membeli Hotdog" << endl;
                                 break;
                             }
                             break;
@@ -180,7 +182,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 15 || user.poin.poinAwal >= 15)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMakanan.poin[4];
                                 cout << "Makanan yang anda beli adalah Burger sebesar 15 poin" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMakanan.nama[4];
@@ -190,7 +192,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[pilihan] << " poin untuk membeli Burger" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal - jenisMenu.menuMakanan.poin[4] << " poin untuk membeli Burger" << endl;
                                 break;
                             }
                             break;
@@ -213,7 +215,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 5 || user.poin.poinAwal >= 5)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[0];
                                 cout << "Minuman yang anda beli adalah Fanta" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMinuman.nama[0];
@@ -223,7 +225,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[pilihan] << " poin untuk membeli Fanta" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[0] << " poin untuk membeli Fanta" << endl;
                                 break;
                             }
                         }
@@ -231,7 +233,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 5 || user.poin.poinAwal >= 5)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[1];
                                 cout << "Minuman yang anda beli adalah Coca-Cola" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMinuman.nama[1];
@@ -242,7 +244,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal -jenisMenu.menuMinuman.poin[pilihan] << " poin untuk membeli Coca-Cola" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal -jenisMenu.menuMinuman.poin[1] << " poin untuk membeli Coca-Cola" << endl;
                                 break;
                             }
                         }
@@ -250,7 +252,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 5 || user.poin.poinAwal >= 5)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[2];
                                 cout << "Minuman yang anda beli adalah Sprite" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMinuman.nama[2];
@@ -260,7 +262,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[pilihan] << " poin untuk membeli Sprite" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[2] << " poin untuk membeli Sprite" << endl;
                                 break;
                             }
                         }
@@ -268,7 +270,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 3 || user.poin.poinAwal >= 3)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[3];
                                 cout << "Minuman yang anda beli adalah Aqua" << endl;
                                 cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMinuman.nama[3];
@@ -278,7 +280,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[pilihan] << " poin untuk membeli Aqua" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[3] << " poin untuk membeli Aqua" << endl;
                                 break;
                             }
                         }
@@ -286,7 +288,7 @@ int main()
                         {
                             if (user.poin.poinAwal == 4 || user.poin.poinAwal >= 4)
                             {
-                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[pilihan];
+                                user.poin.poinAwal = user.poin.poinAwal - jenisMenu.menuMinuman.poin[4];
                                 cout << "Minuman yang anda beli adalah Teh Pucuk" << endl;
                                 cout << "Sisa poin anda adalah : " << user.poin.poinAwal << endl;
                                 nota[x] = jenisMenu.menuMinuman.nama[4];
@@ -296,7 +298,7 @@ int main()
                             }
                             else
                             {
-                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[pilihan] << " poin untuk membeli Teh Pucuk" << endl;
+                                cout << "Saldo anda kurang sebesar " << user.poin.poinAwal-jenisMenu.menuMinuman.poin[4] << " poin untuk membeli Teh Pucuk" << endl;
                                 break;
                             }
                         }
