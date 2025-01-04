@@ -8,9 +8,8 @@ using namespace std;
 
 // kamus
 int menu, pilihan, pilihansisa;
-string nota[100]; // untuk memberi nota kepada user hal apa saja yang dibeli dan diberi batasan 100 karna dianggap stok hanya ada 100
-int x, banyakBeli;
-
+int x, y, banyakBeli; // digunakan untuk batas perulangan
+int panjangNama, batasSpasi; // batasan untuk perulangan nota
 // kumpulan fungsi dan prosedur
 int merubahKePoin(int uang);
 int penguranganPembelianPoin(int poin, int harga);
@@ -19,15 +18,19 @@ int mengembalikanKeUang(int poinAwal);
 
 void menuFiveFlavours();
 void header();
-void sistemPembelianMakanan(int pilihan, int &x);
+void sistemPembelianMakanan(int pilihan);
 void saldoKurangMakanan(int pilihan);
 void pembelianMakanan(int pilihan);
-void sistemPembelianMinuman(int pilihan, int &x);
+void sistemPembelianMinuman(int pilihan);
 void pembelianMinuman(int pilihan);
+void tampilkanMenuMakanan();
+void tampilkanMenuMinuman();
 void memilihMenuMakanan();
 void memilihMenuMinuman();
+void tambahkanKeNotaMakanan(int pilihan);
+void tambahkanKeNotaMinuman(int pilihan);
 void tambahanSaldo();
-void transaksiSelesai();
+void tampilkanNota();
 void transaksiSelesai();
 void menuUtama();
 void menuSaldoPoinKurang();
@@ -42,6 +45,14 @@ struct minuman
 {
     string nama[5] = {"Fanta", "Coca-Cola", "Sprite", "Aqua", "Teh Pucuk"};
     int poin[5] = {5, 5, 5, 3, 4};
+};
+
+struct komponenNota
+{
+    string nama[100];
+    int harga[100];
+    int totalPembelian;
+    int totalHarga;
 };
 
 struct komponenUang
@@ -71,6 +82,7 @@ struct komponenUser
 
 komponenMenu jenisMenu;
 komponenUser user;
+komponenNota nota; // untuk memberi nota kepada user hal apa saja yang dibeli dan diberi batasan 100 karna dianggap stok hanya ada 100
 
 // deskripsi
 int main()
@@ -168,7 +180,15 @@ void header()
     cout << "Jumlah saldo poin anda : " << user.poin.poinAwal << endl << endl;
 }
 
-void sistemPembelianMakanan(int pilihan, int &x)
+void tambahkanKeNotaMakanan(int pilihan) 
+{
+    nota.nama[banyakBeli] = jenisMenu.menuMakanan.nama[pilihan-1];
+    nota.harga[banyakBeli] = jenisMenu.menuMakanan.poin[pilihan-1];
+    nota.totalHarga += nota.harga[banyakBeli];  
+    banyakBeli++; // Increment jumlah item yang dibeli
+}
+
+void sistemPembelianMakanan(int pilihan)
 {
     // Kurangi poin sesuai harga makanan
     user.poin.poinAwal -= jenisMenu.menuMakanan.poin[pilihan - 1];
@@ -178,9 +198,7 @@ void sistemPembelianMakanan(int pilihan, int &x)
     cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
 
     // Simpan nama makanan ke dalam nota
-    nota[x] = jenisMenu.menuMakanan.nama[pilihan - 1];
-    x++;          // Increment index nota
-    banyakBeli++; // Tambah jumlah pembelian
+    tambahkanKeNotaMakanan(pilihan);
     cout << endl;
 }
 
@@ -191,21 +209,37 @@ void saldoKurangMakanan(int pilihan)
 
 void pembelianMakanan(int pilihan)
 {
-    if (pilihan > 0 && user.poin.poinAwal >= jenisMenu.menuMakanan.poin[pilihan - 1])
+    if (pilihan > 0 && pilihan <= 5)
     {
-        sistemPembelianMakanan(pilihan, x);
+        if (user.poin.poinAwal >= jenisMenu.menuMakanan.poin[pilihan - 1])
+        {
+            sistemPembelianMakanan(pilihan); // pembelian berhasil
+        }
+        else
+        {
+            saldoKurangMakanan(pilihan); // pembelian gagal karena saldo kurang
+        }
     }
-    else if (pilihan > 0 && user.poin.poinAwal < jenisMenu.menuMakanan.poin[pilihan - 1])
+    else if (pilihan == 0)
     {
-        saldoKurangMakanan(pilihan);
+        cout << "Kembali ke menu utama" << endl; // kembali ke tampilan menu utama
     }
     else
     {
-        cout << "Kembali ke menu utama" << endl;
+        cout << "Pilihan tidak valid" << endl << endl;
+        memilihMenuMakanan(); // ketika pilihan salah maka akan kembali ke tampilan memilih menu makanan
     }
 }
 
-void sistemPembelianMinuman(int pilihan, int &x)
+void tambahkanKeNotaMinuman(int pilihan) 
+{
+    nota.nama[banyakBeli] = jenisMenu.menuMinuman.nama[pilihan-1];
+    nota.harga[banyakBeli] = jenisMenu.menuMinuman.poin[pilihan-1];
+    nota.totalHarga += nota.harga[banyakBeli];
+    banyakBeli++; // Increment jumlah item yang dibeli
+}
+
+void sistemPembelianMinuman(int pilihan)
 {
     // Kurangi poin sesuai harga makanan
     user.poin.poinAwal -= jenisMenu.menuMinuman.poin[pilihan - 1];
@@ -215,9 +249,7 @@ void sistemPembelianMinuman(int pilihan, int &x)
     cout << "Sisa saldo poin anda adalah : " << user.poin.poinAwal << endl;
 
     // Simpan nama makanan ke dalam nota
-    nota[x] = jenisMenu.menuMinuman.nama[pilihan - 1];
-    x++;          // Increment index nota
-    banyakBeli++; // Tambah jumlah pembelian
+    tambahkanKeNotaMinuman(pilihan);
     cout << endl;
 }
 
@@ -228,21 +260,29 @@ void saldoKurangMinuman(int pilihan)
 
 void pembelianMinuman(int pilihan)
 {
-    if (pilihan > 0 && user.poin.poinAwal >= jenisMenu.menuMinuman.poin[pilihan - 1])
+    if (pilihan > 0 && pilihan <= 5)
     {
-        sistemPembelianMinuman(pilihan, x);
+        if (user.poin.poinAwal >= jenisMenu.menuMinuman.poin[pilihan - 1])
+        {
+            sistemPembelianMinuman(pilihan); // pembelian berhasil
+        }
+        else
+        {
+            saldoKurangMinuman(pilihan); // pembelian gagal karena saldo kurang
+        }
     }
-    else if (pilihan > 0 && user.poin.poinAwal < jenisMenu.menuMinuman.poin[pilihan - 1])
+    else if (pilihan == 0)
     {
-        saldoKurangMinuman(pilihan);
+        cout << "Kembali ke menu utama" << endl; // kembali ke tampilan menu utama
     }
     else
     {
-        cout << "Kembali ke menu utama" << endl << endl;
+        cout << "Pilihan tidak valid" << endl << endl;
+        memilihMenuMinuman(); // ketika pilihan salah maka akan kembali ke tampilan memilih menu minuman
     }
 }
 
-void memilihMenuMakanan()
+void tampilkanMenuMakanan()
 {
     cout << "Menu Makanan Five Flavours" << endl;
     cout << "1: Onigiri (10 poin)" << endl;
@@ -251,13 +291,17 @@ void memilihMenuMakanan()
     cout << "4: Hotdog  (15 poin)" << endl;
     cout << "5: Burger  (15 poin)" << endl;
     cout << "0: Kembali ke menu utama" << endl << endl;
+}
+void memilihMenuMakanan()
+{
+    tampilkanMenuMakanan(); // menampilkan menu makanan
     cout << "Pilih makanan yang mau anda tukarkan : ";
     cin >> pilihan;
     cout << endl;
     pembelianMakanan(pilihan);
 }
 
-void memilihMenuMinuman()
+void tampilkanMenuMinuman()
 {
     cout << "Menu Minuman Five Flavours" << endl;
     cout << "1: Fanta     (5 poin)" << endl;
@@ -265,7 +309,12 @@ void memilihMenuMinuman()
     cout << "3: Sprite    (5 poin)" << endl;
     cout << "4: Aqua      (3 poin)" << endl;
     cout << "5: Teh Pucuk (4 poin)" << endl;
-    cout << "0: Kembali ke pilihan menu" << endl;
+    cout << "0: Kembali ke pilihan menu" << endl << endl;
+}
+
+void memilihMenuMinuman()
+{
+    tampilkanMenuMinuman(); // menampilkan menu minuman
     cout << "Pilih minuman yang mau anda tukarkan : ";
     cin >> pilihan;
     cout << endl;
@@ -301,21 +350,60 @@ void tambahanSaldo()
     cout << "Saldo poin Anda kini menjadi : " << user.poin.poinAwal << endl << endl;
 }
 
+void tampilkanNota() 
+{
+    cout << "================================" << endl;
+    cout << "           NOTA PEMBELIAN       " << endl;
+    cout << "================================" << endl;
+    cout << "No.     Nama Item        Harga  " << endl;
+    cout << "--------------------------------" << endl;
+
+    // Loop untuk menampilkan setiap item yang dibeli
+    x = 0;
+    while(x < banyakBeli) 
+    {
+        // Menampilkan nomor item
+        if (x + 1 < 10) // dibuat agar tampilan lebih rapi
+        {
+            cout << x + 1 << ".      "; // Format untuk nomor 1-9
+        } else 
+        {
+            cout << x + 1 << ".     "; // Format untuk nomor >= 10
+        }
+
+        // Menampilkan nama item
+        cout << nota.nama[x];
+
+        // Menambahkan spasi untuk membuat kolom nama item sejajar
+        panjangNama = nota.nama[x].length(); // untuk mengetahui panjang nama item
+        batasSpasi = 17 - panjangNama; // 17 adalah lebar antara kolom item dengan harga
+        y = 0;
+        while (y < batasSpasi) // dibuat agar tampilan lebih rapi
+        { 
+            cout << " ";
+            y++;
+        }       
+
+        // Menampilkan harga
+        cout << nota.harga[x] << " poin" << endl;
+        x++;
+    }
+
+    cout << "---------------------------------" << endl;
+    cout << "Total Keseluruhan: " << nota.totalHarga << " poin" << endl;
+    cout << "Sisa Saldo Poin Anda: " << user.poin.poinAwal << " poin" << endl;
+    cout << "=================================" << endl;
+}
+
 void transaksiSelesai()
 {
     x = 0;
     user.uang.kembalian = mengembalikanKeUang (user.poin.poinAwal);
-    user.poin.poinAwal = -9999;
     if (banyakBeli > 0)
     {
-        cout << "Makanan atau minuman yang anda beli adalah  : " << endl;
-        do
-        {
-            cout << x + 1 << ". " << nota[x] << endl;
-            x++;
-        } while (x < banyakBeli);
-        cout << endl;
+        tampilkanNota();
     }
+    user.poin.poinAwal = -9999;
     cout << "Terima kasih telah berbelanja di Vending Machine Five Flavours" << endl;
     cout << "Uang anda kembali sebesar : Rp" << user.uang.kembalian << endl << endl;
 }
