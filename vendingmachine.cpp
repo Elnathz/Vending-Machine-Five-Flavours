@@ -10,6 +10,7 @@ using namespace std;
 int menu, pilihan, pilihansisa;
 int x, y, banyakBeli; // digunakan untuk batas perulangan
 int panjangNama, batasSpasi; // batasan untuk perulangan nota
+
 // kumpulan fungsi dan prosedur
 int merubahKePoin(int uang);
 int penguranganPembelianPoin(int poin, int harga);
@@ -168,7 +169,6 @@ void header()
         // Cek apakah uang adalah kelipatan 1000
         else if (user.uang.uangAwal % 1000 != 0) // jika uang tidak kelipatan 1000
         {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // menghapus inputan yang salah sampai end line
             cout << "Input tidak valid. Harap masukkan pecahan 1000, 2000, 5000, dst." << endl << endl;
         }
         else // jika inputan berhasil
@@ -191,7 +191,7 @@ void tambahkanKeNotaMakanan(int pilihan)
 void sistemPembelianMakanan(int pilihan)
 {
     // Kurangi poin sesuai harga makanan
-    user.poin.poinAwal -= jenisMenu.menuMakanan.poin[pilihan - 1];
+    user.poin.poinAwal = penguranganPembelianPoin(user.poin.poinAwal, jenisMenu.menuMakanan.poin[pilihan-1]);
 
     // Tampilkan pesan pembelian
     cout << "Makanan yang anda beli adalah " << jenisMenu.menuMakanan.nama[pilihan - 1] << " sebesar " << jenisMenu.menuMakanan.poin[pilihan - 1] << " poin" << endl;
@@ -242,7 +242,7 @@ void tambahkanKeNotaMinuman(int pilihan)
 void sistemPembelianMinuman(int pilihan)
 {
     // Kurangi poin sesuai harga makanan
-    user.poin.poinAwal -= jenisMenu.menuMinuman.poin[pilihan - 1];
+    user.poin.poinAwal = penguranganPembelianPoin(user.poin.poinAwal, jenisMenu.menuMakanan.poin[pilihan-1]);
 
     // Tampilkan pesan pembelian
     cout << "Minuman yang anda beli adalah " << jenisMenu.menuMinuman.nama[pilihan - 1] << " sebesar " << jenisMenu.menuMinuman.poin[pilihan - 1] << " poin" << endl;
@@ -337,7 +337,6 @@ void tambahanSaldo()
         // Cek apakah uang adalah kelipatan 1000
         else if (user.uang.uangTambahan % 1000 != 0) // jika uang tidak kelipatan 1000
         {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // menghapus inputan yang salah sampai end line
             cout << "Input tidak valid. Harap masukkan pecahan 1000, 2000, 5000, dst." << endl << endl;
         }
         else // jika inputan berhasil
@@ -353,7 +352,7 @@ void tambahanSaldo()
 void tampilkanNota() 
 {
     cout << "================================" << endl;
-    cout << "           NOTA PEMBELIAN       " << endl;
+    cout << "          NOTA PEMBELIAN        " << endl;
     cout << "================================" << endl;
     cout << "No.     Nama Item        Harga  " << endl;
     cout << "--------------------------------" << endl;
@@ -398,7 +397,7 @@ void tampilkanNota()
 void transaksiSelesai()
 {
     x = 0;
-    user.uang.kembalian = mengembalikanKeUang (user.poin.poinAwal);
+    user.uang.kembalian = mengembalikanKeUang(user.poin.poinAwal);
     if (banyakBeli > 0)
     {
         tampilkanNota();
